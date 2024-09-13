@@ -4,16 +4,18 @@
     <div class="card p-4 shadow" style="width: 22rem;">
       <h3 class="text-center mb-4">Login</h3>
       <form @submit.prevent="handleLogin">
-        <!-- Username Input -->
+        <!-- Email Input -->
         <div class="mb-3">
-          <label for="username" class="form-label">Email</label>
+          <label for="email" class="form-label">Email</label>
           <input type="text" v-model="email" id="email" class="form-control" placeholder="Enter your email" required />
+          <span v-if="errors.email" class="text-danger">{{ errors.email[0] }}</span>
         </div>
 
         <!-- Password Input -->
         <div class="mb-3">
           <label for="password" class="form-label">Password</label>
           <input type="password" v-model="password" id="password" class="form-control" placeholder="Enter your password" required />
+          <span v-if="errors.password" class="text-danger">{{ errors.password[0] }}</span>
         </div>
 
         <!-- Remember Me Checkbox -->
@@ -36,14 +38,9 @@
       </form>
     </div>
   </div>
-  
 </template>
 
 <script>
-
-
-
-
 import axios from 'axios';
 axios.defaults.baseURL = 'http://127.0.0.1:8000/api';
 
@@ -53,10 +50,12 @@ export default {
       email: '',
       password: '',
       rememberMe: false,
+      errors: {}, // Initialize as an empty object
     };
   },
   methods: {
     async handleLogin() {
+      this.errors = {}; // Clear previous errors
       try {
         const response = await axios.post('/login', {
           email: this.email,
@@ -67,12 +66,15 @@ export default {
         localStorage.setItem('token', response.data.access_token);
         console.log('Login successful:', response.data);
       } catch (error) {
-        console.error('Login failed:', error.response.data.message);
+        if (error.response && error.response.data) {
+          this.errors = error.response.data.error || {}; // Set validation errors
+          console.error('Login failed:', error.response.data.message);
+        }
       }
     },
     handleGoogleLogin() {
       // Implement Google login functionality
-      window.location.href = '127.0.0.1/api/auth/google';
+      window.location.href = 'http://127.0.0.1:8000/api/auth/google';
     },
   },
 };
