@@ -29,6 +29,9 @@
       <button type="submit" class="btn btn-primary">
         {{ isEditing ? 'Update Post' : 'Add Post' }}
       </button>
+
+      <!-- Cancel BUtton -->
+      <button type="button" class="margin-left-10 btn btn-secondary" @click="cancelAction">Cancel</button>
     </form>
   </div>
 </template>
@@ -74,6 +77,10 @@ export default {
         console.error('Error submitting post:', error);
       }
     },
+    cancelAction() {
+      // redirect to post list page
+      this.$router.push({name: 'post-list'});
+    }
   },
 };
 </script>
@@ -86,4 +93,9 @@ export default {
 .mb-3 {
   margin-bottom: 1rem;
 }
+
+.margin-left-10 {
+  margin-left: 10px;
+}
+
 </style>

@@ -2,8 +2,10 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/LoginView.vue'
 import PostView from '../views/PostView.vue'
-import PostList from '../views/PostList.vue'
-import PostForm from '../views/PostForm.vue'
+//import PostList from '../views/PostList.vue'
+//import PostView from '../views/PostForm.vue'
+import PostList from '../views/AllPost.vue'
+import PostForm from '../views/AddEditPost.vue'
 
 
 const router = createRouter({
